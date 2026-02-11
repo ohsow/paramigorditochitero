@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ohsow | control panel</title>
+    <style>
+        body {
+            background: #fff0f3;
+            color: #ff4d6d;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.15);
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid #ffb3c1;
+            margin-bottom: 20px;
+        }
+
+        h1 { font-size: 1.4rem; color: #c9184a; margin-top: 0; }
+        
+        /* Estilo de la Checklist */
+        .checklist {
+            text-align: left;
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            background: #fff8f9;
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .check-item:hover { background: #ffe5ec; }
+
+        input[type="checkbox"] {
+            margin-right: 15px;
+            accent-color: #ff4d6d;
+            width: 18px;
+            height: 18px;
+        }
+
+        .check-text { font-size: 1rem; color: #590d22; }
+
+        input[type="checkbox"]:checked + .check-text {
+            text-decoration: line-through;
+            color: #ffb3c1;
+        }
+
+        #timer {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #c9184a;
+            margin-top: 10px;
+        }
+
+        .footer-tag { font-size: 0.7rem; color: #ffb3c1; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Daily Check for my Boy ❤️</h1>
+        <p style="font-size: 0.8rem; color: #ff8fa3;">¿Ya hiciste todo lo que tu dueña te pidió?</p>
+        
+        <ul class="checklist">
+            <li class="check-item">
+                <input type="checkbox" id="c1">
+                <span class="check-text">¿Ya comiste rico? 🍔</span>
+            </li>
+            <li class="check-item">
+                <input type="checkbox" id="c2">
+            </li>
+            <li class="check-item">
+                <input type="checkbox" id="c2">
+                <span class="check-text">¿Tomaste suficiente agüita? 💧</span>
+            </li>
+            <li class="check-item">
+                <input type="checkbox" id="c3">
+                <span class="check-text">¿Ya te bañaste, guapo? 🛁</span>
+            </li>
+            <li class="check-item">
+                <input type="checkbox" id="c4">
+                <span class="check-text">¿Te mantuviste a salvo? (No cortes) ❤️</span>
+            </li>
+        </ul>
+
+        <hr style="border: 0; border-top: 1px solid #ffb3c1; margin: 20px 0;">
+
+        <p style="margin: 0; font-size: 0.8rem;">Llevamos juntos:</p>
+        <div id="timer">Contando...</div>
+        
+        <div class="footer-tag">property of ohsow</div>
+    </div>
+
+    <script>
+        // CRONÓMETRO - 13 de Abril de 2025
+        const fechaInicio = new Date(2025, 3, 13, 0, 0, 0); 
+
+        function actualizarReloj() {
+            const ahora = new Date();
+            const diferencia = ahora - fechaInicio;
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+            const minutos = Math.floor((diferencia / 1000 / 60) % 60);
+            const segundos = Math.floor((diferencia / 1000) % 60);
+            document.getElementById('timer').innerHTML = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+        }
+        setInterval(actualizarReloj, 1000);
+        actualizarReloj();
+    </script>
+</body>
+</html>
