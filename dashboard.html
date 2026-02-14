@@ -1,321 +1,390 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Amor ❤️</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=DynaPuff:wght@400..700&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
-
-        :root {
-            --fresa-fuerte: #ff4d6d;
-            --fresa-medio: #ff758f;
-            --fresa-pastel: #ffb3c1;
-            --crema: #fff0f3;
-            --blanco-puro: #ffffff;
-            --texto: #590d22;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Sour Gummy', sans-serif;
-            background: linear-gradient(135deg, var(--crema) 0%, #ffe5ec 100%);
-            display: flex;
-            height: 100vh;
-            color: var(--texto);
-            overflow: hidden;
-        }
-
-        /* SIDEBAR ESTILO SOFT */
-        .sidebar {
-            width: 240px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            border-right: 3px solid var(--fresa-pastel);
-            display: flex;
-            flex-direction: column;
-            padding: 30px;
-        }
-
-        h2 { 
-            font-family: 'Cherry Bomb One', cursive; 
-            font-size: 32px; 
-            color: var(--fresa-fuerte);
-            text-shadow: 2px 2px var(--blanco-puro);
-            text-align: center;
-        }
-
-        .menu-item {
-            font-family: 'Cherry Bomb One', cursive;
-            background: var(--blanco-puro);
-            border: 2px solid var(--fresa-pastel);
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 18px;
-            color: var(--fresa-medio);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.1);
-        }
-
-        .menu-item:hover {
-            transform: translateY(-3px);
-            background: var(--fresa-fuerte);
-            color: white;
-            border-color: var(--fresa-fuerte);
-        }
-
-        /* MAIN CONTENT */
-        .main {
-            flex-grow: 1;
-            padding: 40px;
-            overflow-y: auto;
-        }
-
-        h1 {
-            font-family: 'Cherry Bomb One', cursive;
-            font-size: 60px;
-            margin-top: 0;
-            background: linear-gradient(to right, var(--fresa-fuerte), var(--fresa-medio));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.8);
-            border: 3px solid var(--blanco-puro);
-            border-radius: 30px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(255, 117, 143, 0.15);
-        }
-
-        .card-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--fresa-medio);
-            font-weight: 900;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        #nivel-amor {
-            font-family: 'DynaPuff', cursive;
-            font-size: 24px;
-            color: var(--fresa-fuerte);
-            background: var(--crema);
-            padding: 10px;
-            border-radius: 15px;
-        }
-
-        .distancia-val {
-            font-family: 'DynaPuff', cursive;
-            font-size: 38px;
-            color: var(--texto);
-            display: inline-block;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            border: 3px dashed var(--fresa-pastel);
-        }
-
-        #reloj {
-            font-family: 'DynaPuff', cursive;
-            font-size: 24px;
-            color: var(--texto);
-        }
-
-        /* ESTADO DE BIENESTAR */
-        .check-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .btn-opt {
-            font-family: 'DynaPuff', cursive;
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--fresa-pastel);
-            border-radius: 12px;
-            background: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 0.2s;
-        }
-
-        .active-s { 
-            background: var(--fresa-fuerte) !important; 
-            color: white !important; 
-            border-color: var(--fresa-fuerte) !important;
-            box-shadow: 0 0 10px var(--fresa-medio);
-        }
-        .active-n { 
-            background: var(--fresa-medio) !important; 
-            color: white !important;
-            border-color: var(--fresa-medio) !important;
-        }
-
-        .btn-enviar {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(to right, var(--fresa-fuerte), var(--fresa-medio));
-            color: white;
-            border: none;
-            border-radius: 20px;
-            margin-top: 20px;
-            cursor: pointer;
-            font-family: 'Cherry Bomb One', cursive;
-            font-size: 22px;
-            box-shadow: 0 6px 15px rgba(255, 77, 109, 0.3);
-            transition: transform 0.2s;
-        }
-
-        .btn-enviar:active { transform: scale(0.98); }
-
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 40px;
-            padding: 40px;
-            z-index: 1000;
-            width: 85%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(89, 13, 34, 0.2);
-            backdrop-filter: blur(5px);
-            z-index: 999;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>para mi bomboncito 😘</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=DynaPuff:wght@400..700&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+--fresa-fuerte: #ff4d6d;
+--fresa-medio: #ff758f;
+--fresa-pastel: #ffb3c1;
+--crema: #fff0f3;
+--blanco-puro: #ffffff;
+--texto: #590d22;
+}
+body {
+margin: 0;
+font-family: 'Sour Gummy', sans-serif;
+background: linear-gradient(135deg, var(--crema) 0%, #ffe5ec 100%);
+display: flex;
+height: 100vh;
+color: var(--texto);
+overflow: hidden;
+}
+.sidebar {
+width: 240px;
+background: rgba(255, 255, 255, 0.6);
+backdrop-filter: blur(10px);
+border-right: 3px solid var(--fresa-pastel);
+display: flex;
+flex-direction: column;
+padding: 30px;
+transition: transform 0.3s ease;
+}
+.sidebar-footer {
+margin-top: auto;
+font-size: 14px;
+color: var(--fresa-medio);
+text-align: center;
+padding-bottom: 10px;
+}
+h2 {
+font-family: 'Cherry Bomb One', cursive;
+font-size: 32px;
+color: var(--fresa-fuerte);
+text-shadow: 2px 2px var(--blanco-puro);
+text-align: center;
+}
+.menu-item {
+font-family: 'Cherry Bomb One', cursive;
+background: var(--blanco-puro);
+border: 2px solid var(--fresa-pastel);
+margin-bottom: 15px;
+padding: 15px;
+border-radius: 20px;
+cursor: pointer;
+text-align: center;
+font-size: 18px;
+color: var(--fresa-medio);
+transition: all 0.3s ease;
+box-shadow: 0 4px 10px rgba(255, 77, 109, 0.1);
+}
+.menu-item:hover {
+transform: translateY(-3px);
+background: var(--fresa-fuerte);
+color: white;
+}
+.main {
+flex-grow: 1;
+padding: 40px;
+overflow-y: auto;
+}
+h1 {
+font-family: 'Cherry Bomb One', cursive;
+font-size: 50px;
+margin-top: 0;
+background: linear-gradient(to right, var(--fresa-fuerte), var(--fresa-medio));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+margin-bottom: 30px;
+text-align: center;
+line-height: 1.2;
+}
+.grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 25px;
+}
+.card {
+background: rgba(255, 255, 255, 0.8);
+border: 3px solid var(--blanco-puro);
+border-radius: 30px;
+padding: 25px;
+box-shadow: 0 10px 25px rgba(255, 117, 143, 0.15);
+position: relative;
+}
+.card-wide {
+grid-column: span 3;
+}
+.card-label {
+font-size: 12px;
+text-transform: uppercase;
+letter-spacing: 2px;
+color: var(--fresa-medio);
+font-weight: 900;
+margin-bottom: 10px;
+display: block;
+}
+#nivel-amor {
+font-family: 'DynaPuff', cursive;
+font-size: 24px;
+color: var(--fresa-fuerte);
+background: var(--crema);
+padding: 10px;
+border-radius: 15px;
+word-break: break-all;
+}
+.distancia-val {
+font-family: 'DynaPuff', cursive;
+font-size: 38px;
+color: var(--texto);
+display: inline-block;
+background: white;
+padding: 10px 20px;
+border-radius: 20px;
+border: 3px dashed var(--fresa-pastel);
+}
+#reloj {
+font-family: 'DynaPuff', cursive;
+font-size: 22px;
+color: var(--texto);
+}
+.check-container {
+max-width: 600px;
+margin: 0 auto;
+}
+.check-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 15px;
+font-weight: 700;
+font-size: 16px;
+}
+.btn-opt {
+font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+width: 45px; height: 45px;
+border: 2px solid var(--fresa-pastel);
+border-radius: 15px;
+background: white;
+cursor: pointer;
+display: flex; justify-content: center; align-items: center;
+transition: 0.2s;
+font-size: 24px;
+}
+.active-s { background: var(--fresa-fuerte) !important; color: white !important; border-color: var(--fresa-fuerte) !important; transform: scale(1.1); }
+.active-n { background: var(--fresa-medio) !important; color: white !important; border-color: var(--fresa-medio) !important; transform: scale(1.1); }
+#bloqueo-check {
+    display: none;
+    width: 100%;
+    min-height: 300px;
+    background: linear-gradient(to bottom, var(--fresa-fuerte), var(--fresa-medio));
+    border-radius: 27px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 30px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+.btn-enviar {
+width: 100%;
+padding: 18px;
+background: linear-gradient(to right, var(--fresa-fuerte), var(--fresa-medio));
+color: white; border: none; border-radius: 20px;
+margin-top: 20px; cursor: pointer;
+font-family: 'Cherry Bomb One', cursive;
+font-size: 22px;
+box-shadow: 0 6px 15px rgba(255, 77, 109, 0.3);
+transition: transform 0.2s;
+}
+.btn-enviar:active { transform: scale(0.98); }
+.heart-btn {
+background: var(--fresa-medio);
+color: white; border: none;
+padding: 15px 40px;
+border-radius: 20px;
+font-family: 'Cherry Bomb One', cursive;
+cursor: pointer;
+margin-top: 25px;
+font-size: 18px;
+box-shadow: 0 5px 15px rgba(255, 117, 143, 0.4);
+transition: transform 0.2s;
+width: 100%;
+}
+.heart-btn:active { transform: scale(0.95); }
+.modal {
+display: none;
+position: fixed;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+background: white; border-radius: 40px;
+padding: 30px; z-index: 1000; width: 85%; max-width: 500px;
+text-align: center; box-shadow: 0 20px 60px rgba(89, 13, 34, 0.2);
+border: 4px solid var(--fresa-pastel);
+max-height: 80vh;
+overflow-y: auto;
+}
+.overlay {
+display: none;
+position: fixed;
+top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(255, 238, 242, 0.85); backdrop-filter: blur(8px); z-index: 999;
+}
+@keyframes shake {
+0%, 100% { transform: translateX(0); }
+25% { transform: translateX(-8px) rotate(-5deg); }
+75% { transform: translateX(8px) rotate(5deg); }
+}
+.shake { animation: shake 0.4s ease-in-out; }
+@media (max-width: 768px) {
+body { flex-direction: column; height: auto; overflow-y: auto; }
+.sidebar { width: 100%; padding: 20px; box-sizing: border-box; flex-direction: row; justify-content: space-around; align-items: center; border-right: none; border-bottom: 3px solid var(--fresa-pastel); position: sticky; top: 0; z-index: 100; }
+.sidebar h2 { display: none; }
+.sidebar-footer { display: none; }
+.menu-item { margin-bottom: 0; padding: 10px; font-size: 14px; }
+.main { padding: 20px; }
+h1 { font-size: 35px; }
+.grid { grid-template-columns: 1fr; }
+.card-wide { grid-column: span 1; }
+.distancia-val { font-size: 28px; }
+.modal { width: 90%; padding: 25px; }
+}
+</style>
 </head>
 <body>
-
-    <div class="sidebar">
-        <h2>MENU</h2>
-        <div class="menu-item">cartitas ✉️</div>
-        <div class="menu-item">cupones 🎟️</div>
-        <div class="menu-item">lee esto ❤️</div>
+<div class="sidebar">
+<h2>MENU</h2>
+<div class="menu-item">cartitas ✉️</div>
+<div class="menu-item">cupones 🎟️</div>
+<div class="menu-item">lee esto ❤️</div>
+<div class="sidebar-footer">hecho con muchito amor</div>
+</div>
+<div class="main">
+<h1>bienvenido amor ♡</h1>
+<div class="grid">
+<div class="card">
+<span class="card-label">nivel de amor</span>
+<div id="nivel-amor"></div>
+</div>
+<div class="card" style="text-align:center">
+<span class="card-label">distancia</span>
+<div class="distancia-val">4718km</div>
+</div>
+<div class="card">
+<span class="card-label">tiempo juntitos</span>
+<div id="reloj"></div>
+</div>
+<div class="card card-wide" id="card-bienestar"><div class="card card-wide" id="card-bienestar">
+    <h3 style="text-align: center; margin-top: 0; font-family: 'Cherry Bomb One', cursive; font-size: 24px; color: var(--fresa-medio);">estado de bienestar</h3>
+    
+    <div id="bloqueo-check">
+        <h2 style="color: white; font-size: 24px; font-family: 'Cherry Bomb One', cursive; text-shadow: none;">ya te chequeaste mor ❤️</h2>
+        <p style="font-family: 'Sour Gummy', sans-serif; font-size: 18px; margin: 15px 0; text-shadow: none;">vuelve a intentarlo en:</p>
+        <div id="timer-bloqueo" style="font-size: 38px; font-family: 'DynaPuff'; font-weight: bold; text-shadow: none;"></div>
     </div>
 
-    <div class="main">
-        <h1>bienvenido amor ♡</h1>
-        
-        <div class="grid">
-            <div class="card">
-                <span class="card-label">Nivel de Amor</span>
-                <div id="nivel-amor"></div>
-            </div>
-
-            <div class="card" style="text-align:center">
-                <span class="card-label">Distancia</span>
-                <div class="distancia-val">4718km</div>
-            </div>
-
-            <div class="card">
-                <span class="card-label">Tiempo Juntos</span>
-                <div id="reloj"></div>
-            </div>
-
-            <div class="card" style="grid-row: span 2;">
-                <h3 style="text-align: center; margin-top: 0; font-family: 'Cherry Bomb One', cursive; font-size: 24px; color: var(--fresa-medio);">estado de bienestar</h3>
-                <div id="questions">
-                    <div class="check-row"><span>tomaste awita s/n</span><div style="display:flex; gap:8px"><div class="btn-opt" onclick="sel(1,1)">s</div><div class="btn-opt" onclick="sel(1,0)">n</div></div></div>
-                    <div class="check-row"><span>comiste algo s/n</span><div style="display:flex; gap:8px"><div class="btn-opt" onclick="sel(2,1)">s</div><div class="btn-opt" onclick="sel(2,0)">n</div></div></div>
-                    <div class="check-row"><span>dormiste rico anoche s/n</span><div style="display:flex; gap:8px"><div class="btn-opt" onclick="sel(3,1)">s</div><div class="btn-opt" onclick="sel(3,0)">n</div></div></div>
-                    <div class="check-row"><span>te sientes bien emocionalmente s/n</span><div style="display:flex; gap:8px"><div class="btn-opt" onclick="sel(4,1)">s</div><div class="btn-opt" onclick="sel(4,0)">n</div></div></div>
-                    <div class="check-row"><span>no te duele nada s/n</span><div style="display:flex; gap:8px"><div class="btn-opt" onclick="sel(5,1)">s</div><div class="btn-opt" onclick="sel(5,0)">n</div></div></div>
-                    <div class="check-row" style="color: var(--fresa-fuerte);"><span>eres mío s/s</span><div style="display:flex; gap:8px"><div class="btn-opt active-s">s</div></div></div>
-                </div>
-                <button class="btn-enviar" onclick="enviar()">ENVIAR ❤️</button>
-            </div>
-        </div>
+    <div class="check-container" id="questions">
+        <div class="check-row"><span>tomaste awita?</span><div style="display:flex; gap:10px"><div class="btn-opt" onclick="sel(1,1)">🙂‍↕️</div><div class="btn-opt" onclick="sel(1,0)">🙂‍↔️</div></div></div>
+        <div class="check-row"><span>comiste algo?</span><div style="display:flex; gap:10px"><div class="btn-opt" onclick="sel(2,1)">🙂‍↕️</div><div class="btn-opt" onclick="sel(2,0)">🙂‍↔️</div></div></div>
+        <div class="check-row"><span>dormiste rico?</span><div style="display:flex; gap:10px"><div class="btn-opt" onclick="sel(3,1)">🙂‍↕️</div><div class="btn-opt" onclick="sel(3,0)">🙂‍↔️</div></div></div>
+        <div class="check-row"><span>te sientes bien?</span><div style="display:flex; gap:10px"><div class="btn-opt" onclick="sel(4,1)">🙂‍↕️</div><div class="btn-opt" onclick="sel(4,0)">🙂‍↔️</div></div></div>
+        <div class="check-row"><span>estás libre de dolor?</span><div style="display:flex; gap:10px"><div class="btn-opt" onclick="sel(5,1)">🙂‍↕️</div><div class="btn-opt" onclick="sel(5,0)">🙂‍↔️</div></div></div>
+        <div class="check-row" style="color: var(--fresa-fuerte);"><span>eres mío?</span><div style="display:flex; gap:10px"><div class="btn-opt active-s">🙂‍↕️</div></div></div>
+        <button class="btn-enviar" onclick="enviar()">ENVIAR ❤️</button>
     </div>
-
-    <div class="overlay" id="overlay" onclick="cerrar()"></div>
-    <div class="modal" id="modal">
-        <p id="texto-final" style="font-size: 18px; line-height: 1.6; font-family: 'Sour Gummy', sans-serif;"></p>
-        <button onclick="cerrar()" style="background: var(--fresa-medio); color:white; border:none; padding:12px 25px; border-radius:15px; cursor:pointer; font-family: 'Cherry Bomb One', cursive; margin-top: 20px;">cerrar</button>
-    </div>
-
-    <script>
-        function generarRandom() {
-            const chars = "0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
-            let res = "";
-            for(let i=0; i<15; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
-            document.getElementById('nivel-amor').innerText = res;
-        }
-        setInterval(generarRandom, 100);
-
-        const fechaInicio = new Date("April 13, 2025 12:28:44").getTime(); 
-        function actualizarReloj() {
-            const ahora = new Date().getTime();
-            const diff = ahora - fechaInicio;
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-            document.getElementById('reloj').innerText = d + "d " + h + "h " + m + "m " + s + "s";
-        }
-        setInterval(actualizarReloj, 1000);
-
-        let respuestas = {1:null, 2:null, 3:null, 4:null, 5:null};
-        function sel(q, v) {
-            respuestas[q] = v;
-            const row = document.querySelectorAll('.check-row')[q-1];
-            row.querySelectorAll('.btn-opt')[0].classList.toggle('active-s', v === 1);
-            row.querySelectorAll('.btn-opt')[1].classList.toggle('active-n', v === 0);
-        }
-
-        const mensajes = {
-            "1": "mooorr solo tomaste agua :,v eso significa que tienes sueñito, hambre, tas mal y te duele algo :,VV quisiera estar ahi para prepararte algo rico y arroparte y y darte muchitos besitos, pobecito mi bebee, ve a comer algo ni bien puedas mor, todo va a estar bien ti? te lo prometo, no te exijas mucho mi maxo hermoso ❤️",
-            "2": "tienes la pancita llena moor pero tas deshidratado, sin dormir bien, mal y con dolor, así es muy difícil trabajar mor, pofa ve a tomar un poco de awita por mí ti? y recuerda que siempre estoy pensando en ti mi amorcito, tiamuxito 🥺 y si te duele la cabecita intenta pensar en cosas positivas, si es de noche piensa que falta poquito para que llegues y puedas ir a tu camita, si es tempranito tonces piensa en cosas lindas como que vamos a comprar una cunita para nuestra primera hijita o o o o que dice su primera palabrita 🥺",
-            "3": "solo mimiste rico mor??? ve a tomar agua y a comer algo ahora, por lo menos toma algo de awita, estás sin gasolina mor, como tas triste piensa en mí mor, piensa en nuestro futuro ti? piensa que te abrazo muy fuerte y que te digo que estoy orgullosa de ti (porque lo estoy y demasiado) 🥺❤️",
-            "4": "que bueno que tes bien mooorr pero tienes que tomar awita y buscar que comer mor, ese cuerpito de maxo precioso necesita energia para trabajar muy bien todo el dia y ese cerebrito tuyo todo bonitito necesita glucosa para funcionar mejor, asi que ve y busca algo ti? y como no mimiste bien imagina que te acaricio la carita para que no se te cierren los ojos timiamor? y y no te sientas mal, no se que te este poniendo asi ahora pero quiero que sepas que te amo un montonazo y que realmente te quiero dar un abrazote bien fuerte para que se te pase todito el malestar 🥺",
-            "5": "qué bueno que no te duela nada mi amorcito, pero toma awita y come algo yaaaaaaaa, dormiste mal y estas todo decaido mor :,v pobeshito mi niñito tikitito bonito :,v ojala poder agarrar esa cabecita y ponerla en mi pecho para que te sientas seguro mor, piensa cositas bonitas ti? intenta relajarte, respira profundo, cierra los ojos un toque (no te me vayas a mimir en el trabajo) e imagina que te doy cosquillitas con mis besitos de aire en la pancita hasta que sonrias 🥺",
-            "12": "qué bueno que hayas comido y tomado awita mor, pero andas trabajando sin haber dormido bien, todo tristón y con dolor :,vV eres un guerrero moor, mi maxo hermoso, mi guardián, tionomiamor? pero no olvides respirar mor, imagina que te hago piojito para que te relajes y que te doy un abracito bien fuerte para que se te vaya la tristeza y para que olvides tu dolor de cabezota o por algún corte que te hayas hecho mi amor, ya falta poquito pa que descanses mi amorcito ❤️ tiamunmonton",
-            "13": "moor, pofa come algo rico por mi ti?? e imagina que te hago cosquillitas con mis labios en el cuello hasta que sonrias, no se que te este haciendo sentir mal ahora y la verdad me gustaria estar aqui para ti porque supongo que andas aqui porque me tuve que ir o no se, estoy 100% segura de que ahora mismo estoy pensando en ti, en tu carita pechocha, en tu corazoncito, en como estaras, en todo lo que eres porque sí, estoy obsesionada contigo y qué, lo eres todo para mí mor, te amo demasiado, así que respira ti? te amo muxazo mi amor ❤️",
-            "14": "qué bueno que ya hayas tomado awita y que andes bien mi amor, pero te falta comidita y has mimido mal mooorr, anda y busca algo para comer por mí timiamor? para que esa cabecita toda bonita pueda pensar mejor las cositas y para que no tes tan cansado, muaaaaaak, tiamuxito mi maxo hermoso ❤️",
-            "15": "ayy pobecito mi amorcito peciosoo, tomaste awita y no te duele nada pero tas mal :,v y y encima no dormiste bien y y tienes hambre, ve a comer algo ti? y y y recuerda que te amo muxazo mor, permitete estar triste pero no te hundas en tu tristeza ti mi amor? tranquilito, pspspsppspss, ya tranquilito mi vidita, ti? pshshhshshshshhh ya paso mi amor, tiamuxote",
-            "23": "comiste y dormiste rico mromromrmr pero tas todo deshidratado y encima sid :,V ve a tomar awita ahorita mor y dejame cuidarte desde aqui ti? se que quizas hayas acudido a esta pagina porque no ande ahi escribiendote o quizas porque estas viendo la pagina ahorita mismo OMGGG pero si ando en google chat anda y desahogate conmigo mor o al menos dime que estas mal asi puedo consolarte mormormomrormor pero si ese no es el caso tonces quiero que sepas que aunque esto sea algo que literalmente escribi el 14 de febrero y no se en que dia estes ahorita quiero que sepas que te amo demasiado y que para mi siempre siempre siempre seras el mejor y no se si estes decepcionado o enojado y sea algo que estaba fuera de tus manos pero sabes que cosa si se?? que tu puedes con todo mor, porque si puedes con esta loca entonces puedes con todo todo timiamor? tiamu"
-        };
-
-        function enviar() {
-            let codigo = "";
-            for(let i=1; i<=5; i++) if(respuestas[i] === 1) codigo += i;
-            const txt = mensajes[codigo] || "¡perfecto mi amor! así te quiero ver siempre, bien cuidadito y feliz... eres el mejor de todos y me haces la mujer más feliz de todas 🥺";
-            document.getElementById('texto-final').innerText = txt;
-            document.getElementById('modal').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
-
-        function cerrar() {
-            document.getElementById('modal').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-    </script>
+</div>
+</div>
+</div>
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="modal">
+<p id="texto-final" style="font-size: 17px; line-height: 1.5; font-family: 'Sour Gummy', sans-serif; color: var(--texto); text-align: justify;"></p>
+<button class="heart-btn" onclick="cerrar()">gracias mor eres la mejor</button>
+</div>
+<script>
+function generarRandom() {
+const chars = "0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+let res = "";
+for(let i=0; i<15; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+document.getElementById('nivel-amor').innerText = res;
+}
+setInterval(generarRandom, 100);
+const fechaInicio = new Date("April 13, 2025 12:28:44").getTime();
+function actualizarReloj() {
+const ahora = new Date().getTime();
+const diff = ahora - fechaInicio;
+const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+const s = Math.floor((diff % (1000 * 60)) / 1000);
+document.getElementById('reloj').innerText = d + "d " + h + "h " + m + "m " + s + "s";
+}
+setInterval(actualizarReloj, 1000);
+function actualizarTimerBloqueo() {
+const ahora = new Date();
+const mañana = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate() + 1);
+const diff = mañana - ahora;
+const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+const m = Math.floor((diff / (1000 * 60)) % 60);
+const s = Math.floor((diff / 1000) % 60);
+document.getElementById('timer-bloqueo').innerText = (h < 10 ? "0"+h : h) + ":" + (m < 10 ? "0"+m : m) + ":" + (s < 10 ? "0"+s : s);
+}
+setInterval(actualizarTimerBloqueo, 1000);
+let respuestas = {1:null, 2:null, 3:null, 4:null, 5:null};
+function sel(q, v) {
+respuestas[q] = v;
+const row = document.querySelectorAll('.check-row')[q-1];
+row.querySelectorAll('.btn-opt')[0].classList.toggle('active-s', v === 1);
+row.querySelectorAll('.btn-opt')[1].classList.toggle('active-n', v === 0);
+}
+const mensajes = {
+"1": "mooorr solo tomaste agua :,v eso significa que tienes sueñito, hambre, tas mal y te duele algo :,VV quisiera estar ahi para prepararte algo rico y arroparte y y darte muchitos besitos, pobecito mi bebee, ve a comer algo ni bien puedas mor, todo va a estar bien ti? te lo prometo, no te exijas mucho mi maxo hermoso ❤️",
+"2": "tienes la pancita llena moor pero tas deshidratado, sin dormir bien, mal y con dolor, así es muy difícil trabajar mor, pofa ve a tomar un poco de awita por mí ti? y recuerda que siempre estoy pensando en ti mi amorcito, tiamuxito 🥺 y si te duele la cabecita intenta pensar en cosas positivas, si es de noche piensa que falta poquito para que llegues y puedas ir a tu camita, si es tempranito tonces piensa en cosas lindas como que vamos a comprar una cunita para nuestra primera hijita o o o o que dice su primera palabrita 🥺",
+"3": "solo mimiste rico mor??? ve a tomar agua y a comer algo ahora, por lo menos toma algo de awita, estás sin gasolina mor, como tas triste piensa en mí mor, piensa en nuestro futuro ti? piensa que te abrazo muy fuerte y que te digo que estoy orgullosa de ti (porque lo estoy y demasiado) 🥺❤️",
+"4": "que bueno que tes bien mooorr pero tienes que tomar awita y buscar que comer mor, ese cuerpito de maxo precioso necesita energia para trabajar muy bien todo el dia y ese cerebrito tuyo todo bonitito necesita glucosa para funcionar mejor, asi que ve y busca algo ti? y como no mimiste bien imagina que te acaricio la carita para que no se te cierren los ojos timiamor? y y no te sientas mal, no se que te este poniendo asi ahora pero quiero que sepas que te amo un montonazo y que realmente te quiero dar un abrazote bien fuerte para que se te pase todito el malestar 🥺",
+"5": "qué bueno que no te duela nada mi amorcito, pero toma awita y come algo yaaaaaaaa, dormiste mal y estas todo decaido mor :,v pobeshito mi niñito tikitito bonito :,v ojala poder agarrar esa cabecita y ponerla en mi pecho para que te sientas seguro mor, piensa cositas bonitas ti? intenta relajarte, respira profundo, cierra los ojos un toque (no te me vayas a mimir en el trabajo) e imagina que te doy cosquillitas con mis besitos de aire en la pancita hasta que sonrias 🥺",
+"12": "qué bueno que hayas comido y tomado awita mor, pero andas trabajando sin haber dormido bien, todo tristón y con dolor :,vV eres un guerrero moor, mi maxo hermoso, mi guardián, tionomiamor? pero no olvides respirar mor, imagina que te hago piojito para que te relajes y que te doy un abracito bien fuerte para que se te vaya la tristeza y para que olvides tu dolor de cabezota o por algún corte que te hayas hecho mi amor, ya falta poquito pa que descanses mi amorcito ❤️ tiamunmonton",
+"13": "moor, pofa come algo rico por mi ti?? e imagina que te hago cosquillitas con mis labios en el cuello hasta que sonrias, no se que te este haciendo sentir mal ahora y la verdad me gustaria estar aqui para ti porque supongo que andas aqui porque me tuve que ir o no se, estoy 100% segura de que ahora mismo estoy pensando en ti, en tu carita pechocha, en tu corazoncito, en como estaras, en todo lo que eres porque sí, estoy obsesionada contigo y qué, lo eres todo para mí mor, te amo demasiado, así que respira ti? te amo muxazo mi amor ❤️",
+"14": "qué bueno que ya hayas tomado awita y que andes bien mi amor, pero te falta comidita y has mimido mal mooorr, anda y busca algo para comer por mí timiamor? para que esa cabecita toda bonita pueda pensar mejor las cositas y para que no tes tan cansado, muaaaaaak, tiamuxito mi maxo hermoso ❤️",
+"15": "ayy pobecito mi amorcito peciosoo, tomaste awita y no te duele nada pero tas mal :,v y y encima no dormiste bien y y tienes hambre, ve a comer algo ti? y y y recuerda que te amo muxazo mor, permitete estar triste pero no te hundas en tu tristeza ti mi amor? tranquilito, pspspsppspss, ya tranquilito mi vidita, ti? pshshhshshshshhh ya paso mi amor, tiamuxote",
+"23": "comiste y dormiste rico mromromrmr pero tas todo deshidratado y encima sid :,V ve a tomar awita ahorita mor y dejame cuidarte desde aqui ti? se que quizas hayas acudido a esta pagina porque no ande ahi escribiendote o quizas porque estas viendo la pagina ahorita mismo OMGGG pero si ando en google chat anda y desahogate conmigo mor o al menos dime que estas mal asi puedo consolarte mormormomrormor pero si ese no es el caso tonces quiero que sepas que aunque esto sea algo que literalmente escribi el 14 de febrero y no se en que dia estes ahorita quiero que sepas que te amo demasiado y que para mi siempre siempre siempre seras el mejor y no se si estes decepcionado o enojado y sea algo que estaba fuera de tus manos pero sabes que cosa si se?? que tu puedes con todo mor, porque si puedes con esta loca entonces puedes con todo todo timiamor? tiamu",
+"24": "OMGGG tas con la pancita llena y tas feliii, eso es bueno miamoorr, pero te duele algo y estas que te mueres de sueño :,VV pobecito mi bebe trabajadooorr, mi maxo hermosooo poke lo eress, tiono?? tionomiamooorr, el dolor seguro es porque te esfuerzas mucho mi vidita, intenta descansar tus ojitos peciosos aunque sean unos 10 segundos e imagina que te doy muxitos besitos de esos que te curan donde te duele para que se te pase todito el malestar 🥺",
+"25": "comiste rico y no te duele nada, eso es bueno mi amooor, pero andas sin dormir y medio triston :,v y seco como pasita:,VVV ni siquiera fui yo quien te dejo seco dea V:v.:VV:v ve a tomar awita y no estes triste ti mi vidita? piensa que cada día falta menos para vernos, cierra tus ojitos un toque e imagina que te doy de esos besitos de aire en el cachete y te susurro que eres lo mejor de mi vida porque lo eres y en serio no soporto que alguien de la puta madre este mal, animos ti mi maxo? ti mi guardian hermosoo?? muaaaakkk ❤️",
+"34": "que bueno que hayas mimido rico y que tes feli mi amorcito, pero te falta comidita y awita y encima te duele algo :,vV no seas malito contigo mismo moor anda y ve a tomar awa ahorita ti? sé mi buen niño y cuida ese cuerpito que es solo miomiomio y me encanta, si te duele algo imagina que le doy una buena sobada mientras te digo lo muxo que te admiro mi hombre hermoso ❤️",
+"35": "OMGGGGGGGG qué bueno que hayas mimido bien y que no te duela nada mormormormormr pero tienes hambre y sed y y y tas troste sid :,vV como vas a tar triste si te amo tantisimo y eres mi mundo entero?? ve a comer y a tomar awita para que se te pase un poco la tristeza mor, eres mi todo, mi maxo, mi vida, sonríe por mí ti?? mueve esa bokita y sonrie mor porque eso le hara creer a tu cerebrito que tas feli, y si estas triste por algo que esta fuera de tus manos o que ya esta super fuerte tonces no se mor :,vVv pero quiero que sepas que se que puedes con todo y que te amo muchote y y y que eres muuuuy fuerte mi vidita, tiamu ti? 🥺",
+"45": "AAAYY que bueno que tes feli y sin dolor mi amoooorr pero mimiste mal y te falta comidita y awa, ve a cuidarte al toque mor, tu cuerpote necesita energia para seguir siendo tan wapo y fuerte como siempre, hazlo por tu futura esposita ti mi amor?? tiamuxito ❤️",
+"123": "tomaste awita, comiste y mimiste rico mormormor eso me hace muy feli pero tas troste y con dolor :,v quién te hizo tanto daño mi amor?? dime para ir a pegarle 😠 oksera pero no tes tite mi amor, aqui toi, aunque sea un mensaje del 14 de febrero de 2025 creeme que en este preciso momento estoy pensando en ti y en el momento que leas esto, recuerda que te amo con toda mi alma y que ese dolorcito se te va a pasar ti mi amor? eres el mas fuerte de todos y estoy suuuuuuuuuuuper orgullosa de ti timiamor? ❤️",
+"124": "QUÉ BUENO QUE TE CUIDASTE CON COMIDITA Y AWAAA y encima tas feliii pero te falta mimir y te duele algo :,vv seguro es por trabajar tanto mi maxo hermosoooo tiono que eres mi maxoo?? tiii?? tiiiiii??? TIII????? CLARO QUE LO ERES MI AMOOORR TE AMO MUCHITOOO ERES MUY TRABAJADOR TIAMUTIAMUTIAMUU intenta descansar esos ojazos preciosos por lo menos unos segundos ti mi amor? y estirate bien, tiamuxazo ❤️",
+"125": "mooorr poke tas titeee :,V pspspspsps ya mor respira ti? ya paso pshshpshshphsphs ojala pudiera teletransportarse a ti para abrazarte bien fuerte y para llenarte de muxito afecto 🥺 eres un bebe mooorrr te amo muxo, imagina que ando ahi y que te doy muchitos besitos en toda la carita y en la cabecita y me agacho para besarte toda la pancita y el pecho y luego te digo lo mucho que te amo porque te amo Luis, TE ADORO, TE AMO MUCHÍSIMOOOOOOOOOO",
+"134": "ve a comer algo moorrr, alimentame a ese cuerpo de maxo que tienes que me vuelve completamente loquita tiii?? y y yy yy y tambien imagina que le doy muchitos besitos donde te duele mormromormormormr tiamu demasiado mi vidita 💋",
+"135": "OMGGGG tomaste awita y mimiste rico y y no tienes nada que te duelaa 🥺 pero tienes hambrecita y tas tite :,v la barriga vacia pone triste al corazoncito mi vida, ve a comer algo y veras como te sientes mejor, o si no es por eso tonces quiero que sepas que te amo muchito yy y que aunque el mundo te de la espalda yo te la dare pero para ya sabes 🍑⭕👅 perdon quiero que te rias tiamuxito mor :,vV no tes tite mi amooorrrrrr eres un bebe moorrr, mi bebe todo bonitito, todo hermoso, todo lindo precioso guapote muaaaak tiamuxito mi tesoritoooo",
+"145": "tas funcionando con lo ultimo de energia mi amorcitoo ve a comer algo y si puedes cierra los ojitos un toquecito timiamor? cuidate muxo por mi tii?? es que no quiero que te pase nada porque te amo muxito ni tampoco que te enfermes y y eres mas susceptible a eso porque trabajas muxo tonces cuidate mor :,V eres lo mas preciado que tengo mor, tiamuxitito 🥺",
+"234": "teduelealgo? seguro es dolor de cabeza por no tomar agua o oo oo ok adivino te cortaste ok… mor eso te pasa porque te apresuras mooorr pero no te culpo, eres muy trabajador mi amor ❤️ estoy suuuper orgullosa de ti mi cushita pechochaa, mi bebeeee, eres mi macho hacendoso, me siento muy afortunada de tenerte como futuro esposo 🥺 anda mor, ve a tomar awita ti? hazle caso a tu mujer 💋",
+"235": "no dejes que la tristeza te gane mi amooor, hidratate y piensa en nuestra futura casita ti? y en todos los besitos que te dare cuando te vea por fin, no creas que esta relacion solo sera un simple recuerdo porque ya estamos amarrados jejeejjeje y por mi lado no me molesta 👅 te amo muchazo mooorr, no se por que tes triste o estresado pero quiero que sepas que todo va a salir bien ti? te lo prometo, todo va a estar bien, todo, en serio ❤️",
+"245": "mormormormr que bueno que andes feli y sin dolorcito ni hambre moorrr pero iwal ve a tomar awita mor, descansa un poquito los ojitos unos segundos al menos, hazle caso a tu futura esposita que te ama muxo y que quiere verte al 100% ti?? timiamoor? tiamuxito mi bebe 🥺",
+"345": "OMGG MIMISTE BIEN TAS FELI Y SIN DOLOOORR, QUE BUENO MI AMOOOR pero te falta comidita y awita :,VV ve a nutrirte para que sigas asi de bien ti mi bebe? no te descuides que quiero que tes fuertote para cuando nos veamos en el aeropuerto mromromormormr quiero que me cargues y que me lances al aire y que luego me atrapes jejejjejee tiamuxoteeeeeee 🥺",
+"1234": "CASI TODO PERFECTO MI AMOOOOOOOOOOR, comiste, tomaste awita, mimiste y tas feliii, eres TODO un ejemplo a seguir mi vida, aunque siempre lo eres pero iwal jejeje te felicito para que sigas asi y para que nunca tes mal porque no me gusta que tes malito, no me gusta verte triste y no porque me espantes sino porque siento que un ser tan hermoso como tu no deberia sufrir ni siquiera un poquito mor, y BUENo, te duele algo, seguro algun golpe o te duele la cabezota por ser tan trabajador y por tener que lidiar con una novia tan webona, tomate algo si te duele muxo ti? o toma awita, te hace bien, te amo muxito mi maxo hermoso, miheroe, miguardian, mi todo, toditotoditomio ❤️",
+"1235": "fisicamente tas bien mor pero tu corazoncito esta tite :,V y sabes por que me pone triste a mi tambien?? porque ese corazoncito tuyo es lo que te hace tan tu, es parte de ti, es e s es es ees es es es es tu corazoncito, literalmente es el que te acompaño desde la tercera o cuarta semana de gestacion 🥺 a veces no se como alguien tan bonito como tu puede tener organos, se me hace DEMASIADO tierno, es que a veces pienso que eres un peluchito porque eres bien lindo y y todo eso pero luego recuerdo que tienes organos y me pongo loca porque AAAAAAAA TIENES VIDAAA, PUEDES RESPIRAR, PUEDES SENTIR, PUEDES VER, Y NO DIGO QUE SEAS TARADO Y QUE SEAS MI JUGUETE, ES QUE LOS PELUCHITOS SON BONITOS ENTIENDES? a lo que me refiero es que eres mi peluchito favorito mor, asi con esos pelitos, con esa pancita que aun no he visto pero que seguro es MUUUY linda y aun mas linda porque es tuya yy y y esa carita toda bonita y atractiva que me pone SUPER LOCA y esos BRAZOOOTES AASAÑKLZXCZ AHORCAME y Y Yy ESAS VENITAS SADLXLXKCVX y yy sobre todo esos sentimientos hermosos que tienes moor 🥺 eres una coshita mooorrrr, tiamunmonton, no tes titee, no se que hacer para que ya no estes triste pero quiero que sepas que eres lo mas valioso que tengo, no porque tengas dinero, no por tus papeles, nonono, deja de pensar eso, chuchu pensamientos malos, eres lo mas valioso que tengo porque eres la unica persona que tiene una conexion tan especial conmigo, eres lo mas valioso que tengo porque eres tú, eres Luis, eres una personita de la puta madre mor, estás rico, tienes sentimientos intensos y hermosos, eres chistoso, eres agradable de hablar, eres igual de cochino que yo, eres una personita vitamina mor, y encima cuando estoy de malas tú intentas hacer chistes para que me ría 🥺 eres un amor Luis, por eso te quiero como pareja, por eso te quiero como compañero de vida, por eso quiero que seas el padre de mis hijos, por eso te quiero tanto pero tanto tanto que la verdad no querría que faltes nunca en mi vida, ni en la graduación de nuestras crías, ni en sus cumpleaños, ni en mis cumpleaños, ni en san valentin, ni en año nuevo, ni en navidad, ni en nuestras vacaciones, ni en nuestra camita, ni en nuestra casita, nada mor, no quiero que faltes en ningun aspecto de mi vida, quiero que estes siempre presente, quiero que tambien me acompañes cuando tengan que hacerme cesarea, obvio no sera que estare junto a tu lado todo el rato porque se que es necesario y sano en una relacion que tengas tu tiempito a solas para hacer tus pasatiempos o lo que sea pero entiendes no mi amor? CLARO QUE ENTIENDES MI VIDITA porque ademas de wapo, amoroso, chistoso y cochino eres INTELIGENTEE, asi que no te pongas tite ti? quizas no haya dicho nada relacionado a la razon por la que estas triste pero supongo que esto te hara olvidarlo un pokito para que estes feliz porque asi te quiero ver mor, te amo mucho ❤️",
+"1245": "NO TE ME MIMAS MOOR, aun puedes awantar mas, descansa unos segunditos tus ojitos, estirate, aguanta tu respiracion un toquecito, aprieta el puño para hacerle acordar a tu cuerpo que tu tienes el control de todo y tambien imagina que te doy muchitos besitos para despertarte (porque supongo que tas trabajando no?) y yy si estas en tu casita tonces ",
+"1345": "ve a comer algo mormormormr que te lo mereces moorr por ser tan buen niño y esforzarte tanto hoy, provecho mi amorcito pechochooo ❤️ muaksote",
+"2345": "OMGGG COMISTE, MIMISTE, TAS FELI Y SIN DOLOORR BIEN MOR, pero te falta awita, no te me deshidrates que te necesito bien sanito y aun no nos hemos casado mooorr nos falta MUUUCHo por hacer 👅hazle caso a tu dueña y toma awita timiamorcitobonito? tiamuxito ❤️",
+"12345": "OMGGGGGGGG MOOORR TAS PERFECTOOO, comiste, tomaste awita, mimiste rico, tas feli y no te duele nada, me haces la chica mas feli del mundo sabiendo que te cuidas asi de bien mor 🥺 sigue asi miamor, eres increible, eres el mejor novio del mundo entero mor ❤️",
+"nada": "PERO LUIS QUE ES ESTOOOOOOOOOO, MARCASTE QUE NO A ABSOLUTAMENTE TODO?? no estaras mintiendo verdad.... amor o sea que no has tomado awita, no has comido, no has dormido bien, te sientes mal emocionalmente y encima te duele algo?? MOR ME QUIERO MORIR YO TAMBIEN SI TU ESTSA ASIII nonONONONONONO esto es una emergencia amor tengo que dar una alerta presidencial y decir h AMOR COMO VAS A TENER A MI MACHO HERMOSO ASIIII, LTIERALMENTE ESTAS FUNCIONANDO ASI BAJO POQUITOS RECURSOS Y ESO ME DUELE HASTA EL ALMA PORQUE YO NO ESTOY AHI PARA OBLIGARTE A SENTARTE Y A DARTE LA COMIDITA QUE TE PREPARARIA Y TE LA DARIA EN LA BOQUITA COMO UN BEBITO MIAMOR :,V cuchame bien Luis, porque te lo digo con todo mi corazoncito, PARA TODO, DEJA DE TRABAJAR, DEJA DE MOVERTE, DEJA DE PENSAR EN LO QUE SEA QUE TE ESTE PONIENDO MAL Y VE POR UN VASO DE AGUA GIGANTE AHORA MISMO, no es broma mor, VE VE VE VE VE que luego te me secas como una pasita y yo te querria aunque te vuelvas una pasita pero sabes que quiero aun mas? que mi hombrecito te fuertote, que este bien sanito, quiero a mi protector mor, a mi futuro esposito asi bien de salud y radiante mormormormor no eres una maquina mooor aunque tengas esos brazoootes que me vuelven loca y ese pecho donde me quiero esconder para siempre, eres un ser humano de carne y hueso y con organos, y esos organitos necesitan glucosa y awita para que tu cerebrito ese todo inteligente pueda seguir funcionando bien y seguir pensando en mi jeejejje me pongo a pensar en tu corazoncito latiendo rapido por el estres y me dan ganas de agarrarlo con mis manos y darle besitos para que se calme :,V pero si te lo saco te vas a morir nononoon no quiero pensar en eso ok... amor aunque estemos a 4718km mi alma esta pegadisisisisima a la tuya como un chicle mor, y no te voy a soltar nuncanunca ni en las malas ni en las buenas ti? hablo en serio Luis, eres la persona más importante de mi vida, eres mi niño, eres mi cushita, mi rey, mi macho pecioso, mi gordito chitero asi todo bonitito, mi cochinito, mi amorcito, mi caramelito de miel, y si tú estás mal mi mundo se nubla por completo porque eres mi mundo mor, no puedo concentrarme sabiendo que mi tesorito está sufriendo, imagina que ahorita mismo llego por la espalda, que te doy un suuuuuper abrazote bien fuerte, que te huelo el cuello porque seguro weles a hombre trabajador y la verdad creo que seria adicta a tus feromonas, que te doy un besote en el cachetito y te susurro que todo va a estar bien, que ya falta poquito para que descanses, que estoy orgullosa de cada gota de sudor que se te sale por trabajar tanto pero que por favor te cuides un monton porque no quiero que te me enfermes ni que te pase nada malo nunca jamas de los jamases JAMASSS, quién me va a cuidar si no estás tú?? quién me va a hacer reír con sus webadas? quién va a ser el papá de mis crias y me va a acompañar siempre? no mor, ni lo pienses, chuchu malestar, chuchu tristeza, ola yo jejeje, quiero que cierres los ojitos 10 segundos, que respires profundo, que sientas mis besitos de aire en toda tu carita, en tus ojitos cansados, en tu boquita, en tu pancita y que cuando los abras vayas direcot a buscar algo para comer y tambien que vayas a tomar awita, hazlo por tu futura esposita que te ama muchisisisisimo, eres mi vida Luis, eres mi todo, mi soporte, mi alegría, mi amor, mi sol, mi todo y te necesito al 100% porque tenemos un futuro muy grande que construir, muchos millones de dólares que ganar, una casita que decorar y millones de besotes que darnos en persona hasta que nos duelan los labios, te amo muchisimo mi Luis, cuídate ya mismo o me pongo tite 🥺"
+};
+function enviar() {
+let codigo = "";
+let respondidas = 0;
+let todasNo = true;
+for(let i=1; i<=5; i++) {
+if(respuestas[i] !== null) {
+respondidas++;
+if(respuestas[i] === 1) {
+codigo += i;
+todasNo = false;
+}
+}
+}
+if(respondidas < 5) {
+document.getElementById('card-bienestar').classList.add('shake');
+setTimeout(() => document.getElementById('card-bienestar').classList.remove('shake'), 600);
+return;
+}
+let txt = todasNo ? mensajes["nada"] : mensajes[codigo];
+document.getElementById('texto-final').innerText = txt;
+document.getElementById('modal').style.display = 'block';
+document.getElementById('overlay').style.display = 'block';
+}
+function cerrar() {
+document.getElementById('modal').style.display = 'none';
+document.getElementById('overlay').style.display = 'none';
+document.getElementById('bloqueo-check').style.display = 'flex';
+document.getElementById('questions').style.display = 'none';
+document.querySelector('.btn-enviar').style.display = 'none';
+}
+</script>
 </body>
 </html>
